@@ -32,7 +32,6 @@ module.exports = {
           order: 'asc',
           caseInsensitive: true,
         },
-        'newlines-between': 'always-and-inside-groups',
         groups: [['builtin', 'external'], 'internal', 'parent', 'sibling', 'index', 'object'],
       },
     ],
