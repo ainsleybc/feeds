@@ -1,2 +1,8 @@
+# Dependencies
 node_modules
+
+# build files
 build
+
+# log files
+*.log
