@@ -6,3 +6,6 @@ build
 
 # log files
 *.log
+
+# local config
+.vscode

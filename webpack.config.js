@@ -1,5 +1,7 @@
-const path = require('path');
+/* eslint-disable */
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const path = require('path');
+/* eslint-enable */
 
 module.exports = {
   entry: './src/index',
@@ -8,7 +10,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"]
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   module: {
     rules: [
@@ -19,27 +21,16 @@ module.exports = {
           loader: 'babel-loader',
         },
       },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-          },
-        ],
-      },
     ],
   },
   plugins: [
     new HtmlWebPackPlugin({
       template: './public/index.html',
-      favicon: `./public/favicon.ico`
+      favicon: './public/favicon.ico',
     }),
   ],
   devServer: {
     hot: true,
-    open: true
-  }
+    open: true,
+  },
 };

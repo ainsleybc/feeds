@@ -17,6 +17,6 @@
     "noUnusedParameters": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "baseUrl": "src"
+    "baseUrl": "src",
   }
 }
