@@ -4,7 +4,7 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "target": "esnext",
-    "module": "es6",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
@@ -17,6 +17,12 @@
     "noUnusedParameters": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "baseUrl": "src",
+    "baseUrl": ".",
+    "paths": {
+      "~types": ["src/types"],
+      "~store": ["src/store"],
+      "~store/*": ["src/store/*"],
+      "~test-utils": ["test-utils"]
+    }
   }
 }

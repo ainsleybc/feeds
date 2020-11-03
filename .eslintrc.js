@@ -32,7 +32,7 @@ module.exports = {
           order: 'asc',
           caseInsensitive: true,
         },
-        groups: [['builtin', 'external'], 'internal', 'parent', 'sibling', 'index', 'object'],
+        groups: [['builtin', 'external'], 'internal', ['index', 'parent', 'sibling'], 'object'],
       },
     ],
   },
@@ -40,6 +40,9 @@ module.exports = {
   settings: {
     react: {
       version: 'detect',
+    },
+    'import/resolver': {
+      typescript: {},
     },
   },
 };

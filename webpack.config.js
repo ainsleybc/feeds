@@ -1,6 +1,7 @@
 /* eslint-disable */
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 /* eslint-enable */
 
 module.exports = {
@@ -10,6 +11,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   resolve: {
+    plugins: [new TsconfigPathsPlugin()],
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   module: {
