@@ -44,7 +44,7 @@ export const Feeds = () => {
         <Container maxWidth="xl">
           <header>
             <LogoContainer>
-              <Logo height="auto" width="40px" />
+              <Logo height="100%" width="40px" />
               <Typography variant="h6" component="p">
                 Chainlink
               </Typography>
