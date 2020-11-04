@@ -1,9 +1,11 @@
 import { Avatar, Typography } from '@material-ui/core';
 import { AvatarGroup } from '@material-ui/lab';
-import React from 'react';
+import { BigNumber } from 'bignumber.js';
+import { formatDistance } from 'date-fns';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { Feed as FeedType } from '~types';
+import { useFeed, fetchLatestAnswerStart, fetchLatestAnswerStop } from '~store';
 
 const Row = styled.div`
   display: flex;
@@ -48,12 +50,43 @@ const generateSponsorUrl = (sponsor: string) => {
   return `https://smartcontract.imgix.net/feeds/sponsors/${sponsor.toLowerCase()}_tn.png?auto=format`;
 };
 
-export const Feed = ({ data }: { data: FeedType }) => {
-  const [firstCurrency, secondCurrency] = data.pair;
-  const { name, sponsored, valuePrefix } = data;
+export const Feed = ({ address }: { address: string }) => {
+  const [feed, dispatch] = useFeed(address);
 
-  // temp dummy variables
-  const price = 3.8998908;
+  if (!feed) {
+    // @TODO show something better here
+    return <p>Something went wrong</p>;
+  }
+
+  const {
+    name,
+    price,
+    multiply,
+    sponsored,
+    valuePrefix,
+    lastUpdated,
+    decimalPlaces,
+    formatDecimalPlaces,
+    pair: [firstCurrency, secondCurrency],
+  } = feed;
+
+  const formatPrice = (price: string) => {
+    const number = new BigNumber(price)
+      .dividedBy(multiply)
+      .shiftedBy(-formatDecimalPlaces)
+      .toFixed(decimalPlaces, 3);
+
+    return `${valuePrefix} ${Number.parseFloat(number).toString()}`;
+  };
+
+  useEffect(() => {
+    dispatch(fetchLatestAnswerStart(address));
+
+    // unsubscribe when we dismount
+    return () => {
+      dispatch(fetchLatestAnswerStop(address));
+    };
+  }, []);
 
   return (
     <Row>
@@ -66,8 +99,14 @@ export const Feed = ({ data }: { data: FeedType }) => {
         {name}
       </Name>
 
+      <Name variant="body1" data-testid="feed-last-updated">
+        {lastUpdated
+          ? formatDistance(new Date(lastUpdated), new Date(), { addSuffix: true })
+          : null}
+      </Name>
+
       <Price variant="body1" data-testid="feed-price">
-        {`${valuePrefix} ${price}`}
+        {price ? formatPrice(price) : null}
       </Price>
 
       <Sponsors max={4} spacing={-3}>

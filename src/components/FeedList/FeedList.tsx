@@ -44,7 +44,7 @@ export const FeedList = ({ 'data-testid': testId }: Testable) => {
           `}
         >
           {data.map((feed) => (
-            <Feed data={feed} key={feed.contractAddress} />
+            <Feed address={feed.contractAddress} key={feed.contractAddress} />
           ))}
         </Paper>
       </Container>

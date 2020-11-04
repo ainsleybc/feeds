@@ -1,3 +1,3 @@
 export * from './FeedsProvider';
-export * from './useFeeds';
-export * from './Actions';
+export * from './FeedsHooks';
+export * from './FeedsActions';

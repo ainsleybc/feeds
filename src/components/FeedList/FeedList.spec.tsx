@@ -5,8 +5,9 @@ import { useFeeds } from '~store';
 import { render } from '~test-utils';
 import { Feed } from '~types';
 
-jest.mock('~store/feeds/useFeeds', () => ({
+jest.mock('~store/feeds/FeedsHooks', () => ({
   useFeeds: jest.fn(),
+  useFeed: () => [null, jest.fn()],
 }));
 
 describe('FeedList', () => {

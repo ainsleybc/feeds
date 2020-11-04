@@ -1,8 +1,13 @@
 import React from 'react';
 
 import { Feed } from './Feed';
+import { useFeed } from '~store';
 import { render } from '~test-utils';
 import { Feed as FeedType } from '~types';
+
+jest.mock('~store/feeds/FeedsHooks', () => ({
+  useFeed: jest.fn(),
+}));
 
 describe('Feed', () => {
   it('displays the correct data', () => {
@@ -25,11 +30,15 @@ describe('Feed', () => {
       sponsored: ['Synthetix'],
       threshold: 0.5,
       valuePrefix: '$',
+      price: '123456908790870',
+      lastUpdated: '2020-11-04T20:23:50.000Z',
     };
 
-    const { getByTestId } = render(<Feed data={testData} />);
+    (useFeed as jest.Mock).mockReturnValue([testData, jest.fn()]);
+
+    const { getByTestId } = render(<Feed address={testData.contractAddress} />);
 
     expect(getByTestId('feed-name')).toHaveTextContent('ETH / USD');
-    expect(getByTestId('feed-price')).toHaveTextContent('3.8998908');
+    expect(getByTestId('feed-price')).toHaveTextContent('$ 1234569.087');
   });
 });

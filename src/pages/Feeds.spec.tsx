@@ -8,6 +8,11 @@ jest.mock('~services', () => ({
   get: jest.fn(),
 }));
 
+jest.mock('~store/feeds/FeedsHooks', () => ({
+  useFeed: () => [null, jest.fn()],
+  useFeeds: () => [{ data: [] }, jest.fn()],
+}));
+
 describe('Feeds', () => {
   let getByTestId: (is: string) => HTMLElement;
 
@@ -42,10 +47,9 @@ describe('Feeds', () => {
     }));
   });
 
-  it('has a heading', async () => {
-    await act(async () => {
+  it('has a heading', () => {
+    act(() => {
       ({ getByTestId } = render(<Feeds />));
-      // await flushPromises();
     });
 
     expect(getByTestId('heading')).toHaveTextContent(
@@ -53,10 +57,9 @@ describe('Feeds', () => {
     );
   });
 
-  it('renders a feeds list', async () => {
-    await act(async () => {
+  it('renders a feeds list', () => {
+    act(() => {
       ({ getByTestId } = render(<Feeds />));
-      // await flushPromises();
     });
 
     expect(getByTestId('feed-list')).toBeVisible();

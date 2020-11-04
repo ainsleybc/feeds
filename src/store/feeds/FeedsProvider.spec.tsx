@@ -1,21 +1,16 @@
-import { render, waitFor, act } from '@testing-library/react';
-import React, { useContext, Dispatch } from 'react';
-import { fetchFeedsStart, Action } from './Actions';
+import { render } from '@testing-library/react';
+import React, { useContext } from 'react';
 import { FeedsProvider, store } from './FeedsProvider';
-import { get } from '~services';
 
 jest.mock('~services', () => ({
   get: jest.fn(),
 }));
 
-let dispatch: Dispatch<Action>;
-
 const renderTestComponent = () => {
   const returnVal: any = {};
 
   const TestComponent = () => {
-    const [state, newDispatch] = useContext(store);
-    dispatch = newDispatch;
+    const [state] = useContext(store);
     Object.assign(returnVal, state);
     return null;
   };
@@ -36,60 +31,5 @@ describe('FeedsProvider', () => {
     expect(state.loading).toEqual(false);
     expect(state.error).toEqual(null);
     expect(state.data).toEqual([]);
-  });
-
-  it('updates state when feeds succesfully fetched', async () => {
-    const testFeeds = [
-      {
-        compareOffchain: 'https://www.tradingview.com/symbols/ETHUSD/?exchange=COINBASE',
-        contractAddress: '0x00c7A37B03690fb9f41b5C5AF8131735C7275446',
-        contractType: 'flux-aggregator',
-        contractVersion: 3,
-        decimalPlaces: 3,
-        formatDecimalPlaces: 0,
-        healthPrice: 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum',
-        heartbeat: 10800,
-        history: true,
-        listing: true,
-        multiply: '100000000',
-        name: 'ETH / USD',
-        pair: ['ETH', 'USD'],
-        path: 'eth-usd',
-        proxyAddress: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
-        sponsored: ['Synthetix'],
-        threshold: 0.5,
-        valuePrefix: '$',
-      },
-    ];
-
-    (get as jest.Mock).mockImplementation(() => ({
-      subscribe: (success: any) => {
-        success({ response: testFeeds });
-      },
-    }));
-
-    const state = renderTestComponent();
-
-    act(() => {
-      dispatch(fetchFeedsStart());
-    });
-
-    await waitFor(() => expect(state.data).toEqual(testFeeds));
-  });
-
-  it('updates state when feeds failed to fetch', async () => {
-    (get as jest.Mock).mockImplementation(() => ({
-      subscribe: (_: any, error: any) => {
-        error('something went wrong');
-      },
-    }));
-
-    const state = renderTestComponent();
-
-    act(() => {
-      dispatch(fetchFeedsStart());
-    });
-
-    await waitFor(() => expect(state.error).toEqual('something went wrong'));
   });
 });
