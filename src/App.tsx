@@ -12,9 +12,6 @@ import { FeedsProvider } from './store';
 import { theme } from './theme';
 
 export const App = () => {
-  console.log(theme);
-  // console.log(FeedsProvider);
-
   return (
     <MaterialUIThemeProvider theme={theme}>
       <StyledComponentsThemeProvider theme={theme}>

@@ -17,4 +17,6 @@ export type Feed = {
   sponsored: string[];
   threshold: number;
   valuePrefix: string;
+  price?: string;
+  lastUpdated?: string;
 };
