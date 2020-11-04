@@ -1,5 +1,5 @@
 import { Container, Paper } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Feed } from './Feed';
@@ -25,9 +25,11 @@ const Wrapper = styled.div`
 export const FeedList = ({ 'data-testid': testId }: Testable) => {
   const [{ data }, dispatch] = useFeeds();
 
-  if (!data?.length) {
-    dispatch(fetchFeedsStart());
-  }
+  useEffect(() => {
+    if (!data?.length) {
+      dispatch(fetchFeedsStart());
+    }
+  }, [data]);
 
   return (
     <Wrapper data-testid={testId}>

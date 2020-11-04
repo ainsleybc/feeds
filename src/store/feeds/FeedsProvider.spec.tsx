@@ -1,7 +1,12 @@
 import { render, waitFor, act } from '@testing-library/react';
 import React, { useContext, Dispatch } from 'react';
-import { fetchFeedsSuccess, Action } from './Actions';
+import { fetchFeedsStart, Action } from './Actions';
 import { FeedsProvider, store } from './FeedsProvider';
+import { get } from '~services';
+
+jest.mock('~services', () => ({
+  get: jest.fn(),
+}));
 
 let dispatch: Dispatch<Action>;
 
@@ -33,7 +38,7 @@ describe('FeedsProvider', () => {
     expect(state.data).toEqual([]);
   });
 
-  it('can dispatch actions', async () => {
+  it('updates state when feeds succesfully fetched', async () => {
     const testFeeds = [
       {
         compareOffchain: 'https://www.tradingview.com/symbols/ETHUSD/?exchange=COINBASE',
@@ -57,12 +62,34 @@ describe('FeedsProvider', () => {
       },
     ];
 
+    (get as jest.Mock).mockImplementation(() => ({
+      subscribe: (success: any) => {
+        success({ response: testFeeds });
+      },
+    }));
+
     const state = renderTestComponent();
 
     act(() => {
-      dispatch(fetchFeedsSuccess(testFeeds));
+      dispatch(fetchFeedsStart());
     });
 
     await waitFor(() => expect(state.data).toEqual(testFeeds));
+  });
+
+  it('updates state when feeds failed to fetch', async () => {
+    (get as jest.Mock).mockImplementation(() => ({
+      subscribe: (_: any, error: any) => {
+        error('something went wrong');
+      },
+    }));
+
+    const state = renderTestComponent();
+
+    act(() => {
+      dispatch(fetchFeedsStart());
+    });
+
+    await waitFor(() => expect(state.error).toEqual('something went wrong'));
   });
 });

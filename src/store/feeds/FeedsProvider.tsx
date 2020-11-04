@@ -1,5 +1,7 @@
 import React, { useReducer, createContext, Dispatch } from 'react';
+import { AjaxResponse } from 'rxjs/ajax';
 import { ActionTypes, Action, fetchFeedsSuccess, fetchFeedsFailed } from './Actions';
+import { get } from '~services';
 import { Feed } from '~types';
 
 export type State = { loading: boolean; error: null | any; data: Array<Feed> };
@@ -19,13 +21,11 @@ const reducer = (state: State, action: Action) => {
 };
 
 async function fetchFeeds(dispatch: Dispatch<Action>) {
-  try {
-    // @TODO - dummy data, replace with proper api call
-    const { default: data } = await import('../testData.json');
-    dispatch(fetchFeedsSuccess(data));
-  } catch (e) {
-    dispatch(fetchFeedsFailed(e));
-  }
+  const url = 'https://weiwatchers.com/feeds-mainnet.json';
+  get({ url }).subscribe(
+    ({ response }: AjaxResponse) => dispatch(fetchFeedsSuccess(response)),
+    (err: AjaxResponse) => dispatch(fetchFeedsFailed(err))
+  );
 }
 
 const customDispatch = (dispatchFn: Dispatch<Action>) => (action: Action) => {

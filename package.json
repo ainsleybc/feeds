@@ -27,6 +27,7 @@
     "fontsource-roboto": "^3.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "rxjs": "^6.6.3",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
