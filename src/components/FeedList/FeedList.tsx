@@ -43,8 +43,8 @@ export const FeedList = ({ 'data-testid': testId }: Testable) => {
             overflow: hidden;
           `}
         >
-          {data.map(({ contractAddress }) => (
-            <Feed address={contractAddress} key={contractAddress} />
+          {data.map(({ path }) => (
+            <Feed id={path} key={path} />
           ))}
         </Paper>
       </Container>

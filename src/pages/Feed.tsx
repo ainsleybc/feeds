@@ -5,19 +5,13 @@ import { useFeed, fetchFeedsStart, fetchLatestAnswerStart, fetchLatestAnswerStop
 import { formatDateDifference, formatPrice } from '~utils';
 
 export const Feed = () => {
-  const { address } = useParams<{ address: string }>();
-  const [feed, dispatch] = useFeed(address);
+  const { id } = useParams<{ id: string }>();
+  const [feed, dispatch] = useFeed(id);
 
   useEffect(() => {
     if (!feed) {
       dispatch(fetchFeedsStart());
     }
-    dispatch(fetchLatestAnswerStart(address));
-
-    // unsubscribe when we dismount
-    return () => {
-      dispatch(fetchLatestAnswerStop(address));
-    };
   }, []);
 
   if (!feed) {
@@ -26,10 +20,20 @@ export const Feed = () => {
   }
 
   const {
+    contractAddress,
     heartbeat,
     threshold,
     pair: [firstCurrency, secondCurrency],
   } = feed;
+
+  useEffect(() => {
+    dispatch(fetchLatestAnswerStart(contractAddress));
+
+    // unsubscribe when we dismount
+    return () => {
+      dispatch(fetchLatestAnswerStop(contractAddress));
+    };
+  }, [feed]);
 
   return (
     <>

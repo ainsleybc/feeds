@@ -73,7 +73,7 @@ describe('useFeed', () => {
     return returnVal;
   };
 
-  it('returns the feed by contract address', async () => {
+  it('returns the feed by path id', async () => {
     const testFeed: FeedType = {
       compareOffchain: 'https://www.tradingview.com/symbols/ETHUSD/?exchange=COINBASE',
       contractAddress: '0x00c7A37B03690fb9f41b5C5AF8131735C7275446',
@@ -99,7 +99,7 @@ describe('useFeed', () => {
       data: [testFeed],
     };
 
-    const state = renderTestComponent(mockState, testFeed.contractAddress);
+    const state = renderTestComponent(mockState, testFeed.path);
     expect(state).toEqual(testFeed);
   });
 });

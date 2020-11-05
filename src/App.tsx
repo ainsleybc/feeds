@@ -23,7 +23,7 @@ export const App = () => {
             <Router>
               <Switch>
                 <Route path="/" component={Feeds} exact />
-                <Route path="/:address" component={Feed} exact />
+                <Route path="/:id" component={Feed} exact />
               </Switch>
             </Router>
           </FeedsProvider>

@@ -53,8 +53,8 @@ const generateSponsorUrl = (sponsor: string) => {
   return `https://smartcontract.imgix.net/feeds/sponsors/${sponsor.toLowerCase()}_tn.png?auto=format`;
 };
 
-export const Feed = ({ address }: { address: string }) => {
-  const [feed, dispatch] = useFeed(address);
+export const Feed = ({ id }: { id: string }) => {
+  const [feed, dispatch] = useFeed(id);
 
   if (!feed) {
     // @TODO show something better here
@@ -63,22 +63,24 @@ export const Feed = ({ address }: { address: string }) => {
 
   const {
     name,
+    path,
+    contractAddress,
     sponsored,
     pair: [firstCurrency, secondCurrency],
   } = feed;
 
   useEffect(() => {
-    dispatch(fetchLatestAnswerStart(address));
+    dispatch(fetchLatestAnswerStart(contractAddress));
 
     // unsubscribe when we dismount
     return () => {
-      dispatch(fetchLatestAnswerStop(address));
+      dispatch(fetchLatestAnswerStop(contractAddress));
     };
   }, []);
 
   return (
     <Row>
-      <Link to={`/${address}`}>
+      <Link to={`/${path}`}>
         <CurrencyIcons max={2}>
           <Avatar alt={firstCurrency} />
           <Avatar alt={secondCurrency} />

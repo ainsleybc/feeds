@@ -11,12 +11,12 @@ export const useFeeds = (): [State, Dispatch<Action>] => {
   return context;
 };
 
-export const useFeed = (address: string): [Feed | undefined, Dispatch<Action>] => {
+export const useFeed = (id: string): [Feed | undefined, Dispatch<Action>] => {
   const [{ data }, dispatch] = useContext(store);
   if (!data) {
     throw new Error('useFeeds must be used within a FeedsProvider');
   }
-  const feed = data.find(({ contractAddress }) => contractAddress === address);
+  const feed = data.find(({ path }) => path === id);
 
   return [feed, dispatch];
 };
