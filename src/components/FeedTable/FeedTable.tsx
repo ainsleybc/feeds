@@ -1,4 +1,4 @@
-import { Container, Paper } from '@material-ui/core';
+import { Container, Paper, Typography, Hidden } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -23,6 +23,30 @@ const Table = styled(Paper)`
   }
 `;
 
+const TableHeader = styled.div`
+  padding: ${({ theme }) => `${theme.spacing(2)}px`};
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > p {
+    font-size: 1.3rem;
+  }
+
+  & > p:first-child {
+    flex: 1 0 auto;
+  }
+`;
+
+const Current = styled(Typography)`
+  width: 200px;
+`;
+
+const Sponsored = styled(Typography)`
+  width: 100px;
+`;
+
 export const FeedTable = ({ 'data-testid': testId }: Testable) => {
   const [{ data }, dispatch] = useFeeds();
 
@@ -35,6 +59,14 @@ export const FeedTable = ({ 'data-testid': testId }: Testable) => {
   return (
     <Wrapper data-testid={testId} maxWidth="xl">
       <Table elevation={2} variant="outlined" data-testid="feeds-list-wrapper">
+        <TableHeader>
+          <Typography>Currency Pair</Typography>
+          <Current>Last Updated</Current>
+          <Current>Price</Current>
+          <Hidden smDown>
+            <Sponsored>Sponsors</Sponsored>
+          </Hidden>
+        </TableHeader>
         {data.map(({ path }) => (
           <FeedRow id={path} key={path} />
         ))}

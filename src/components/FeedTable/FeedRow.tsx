@@ -14,6 +14,7 @@ const Row = styled.div`
 
   & > a {
     display: flex;
+    height: 100%;
     align-items: center;
   }
 `;
@@ -27,21 +28,40 @@ const CurrencyIcons = styled(AvatarGroup)`
 `;
 
 const Name = styled(Typography)`
+  min-width: 150px;
   font-size: 1.2rem;
   flex: 1 0 auto;
   color: ${({ theme }) => theme.palette.grey[700]};
 `;
 
+const Values = styled.div`
+  margin-left: ${({ theme }) => `${theme.spacing(2)}px`};
+  display: flex;
+
+  & > p {
+    text-align: left;
+    display: inline-block;
+    width: 200px;
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column-reverse;
+  }
+`;
+
+const LastUpdated = styled(Typography)`
+  font-size: 1rem;
+  color: ${({ theme }) => theme.palette.grey[500]};
+`;
+
 const Price = styled(Typography)`
-  width: 120px;
-  text-align: center;
   font-size: 1.2rem;
   color: ${({ theme }) => theme.palette.primary.main};
   font-weight: bold;
 `;
 
 const Sponsors = styled(AvatarGroup)`
-  width: 90px;
+  width: 100px;
   margin-left: ${({ theme }) => `${theme.spacing(2)}px`};
 
   & > div {
@@ -95,17 +115,15 @@ export const FeedRow = ({ id }: { id: string }) => {
           </CurrencyIcons>
         </Hidden>
 
-        <Name variant="body1" data-testid="feed-name">
-          {name}
-        </Name>
+        <Name data-testid="feed-name">{name}</Name>
 
-        <Name variant="body1" data-testid="feed-last-updated">
-          {formatDateDifference(feed) || null}
-        </Name>
+        <Values>
+          <LastUpdated data-testid="feed-last-updated">
+            {formatDateDifference(feed) || null}
+          </LastUpdated>
 
-        <Price variant="body1" data-testid="feed-price">
-          {formatPrice(feed) || null}
-        </Price>
+          <Price data-testid="feed-price">{formatPrice(feed) || null}</Price>
+        </Values>
 
         <Hidden smDown>
           <Sponsors max={4} spacing={-3}>
