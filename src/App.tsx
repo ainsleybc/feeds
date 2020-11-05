@@ -5,7 +5,7 @@ import {
   ThemeProvider as MaterialUIThemeProvider,
 } from '@material-ui/core';
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
 import { Feeds, Feed } from './pages';
