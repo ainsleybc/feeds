@@ -2,7 +2,7 @@ import { Container, Paper } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { Feed } from '../Feed/Feed';
+import { FeedRow } from './FeedRow';
 import { useFeeds, fetchFeedsStart } from '~store';
 import { Testable } from '~types';
 
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export const FeedList = ({ 'data-testid': testId }: Testable) => {
+export const FeedTable = ({ 'data-testid': testId }: Testable) => {
   const [{ data }, dispatch] = useFeeds();
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const FeedList = ({ 'data-testid': testId }: Testable) => {
           `}
         >
           {data.map(({ path }) => (
-            <Feed id={path} key={path} />
+            <FeedRow id={path} key={path} />
           ))}
         </Paper>
       </Container>

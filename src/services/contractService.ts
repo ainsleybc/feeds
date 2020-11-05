@@ -22,10 +22,10 @@ export const latestAnswer = (address: string): Observable<LatestAnswer> =>
     contract.functions
       .latestRoundData()
       .then(({ updatedAt, answer }: { updatedAt: BigNumber; answer: BigNumber }) => {
-        subscriber.next({ updatedAt: toTimeStamp(updatedAt), answer: toString(answer) });
+        subscriber.next({ updatedAt: toTimeStamp(updatedAt), price: toString(answer) });
       });
 
     contract.on('AnswerUpdated', (answer, _, updatedAt) => {
-      subscriber.next({ updatedAt: toTimeStamp(updatedAt), answer: toString(answer) });
+      subscriber.next({ updatedAt: toTimeStamp(updatedAt), price: toString(answer) });
     });
   });

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React, { useContext } from 'react';
-import { FeedsProvider, store } from './FeedsProvider';
+import { FeedsProvider, store } from './Provider';
 
 jest.mock('~services', () => ({
   get: jest.fn(),

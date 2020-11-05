@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
 import { theme } from './theme';
-import { Feeds, Feed } from '~pages';
+import { Home, Feed } from '~pages';
 import { FeedsProvider } from '~store';
 
 export const App = () => {
@@ -22,7 +22,7 @@ export const App = () => {
           <FeedsProvider>
             <Router>
               <Switch>
-                <Route path="/" component={Feeds} exact />
+                <Route path="/" component={Home} exact />
                 <Route path="/:id" component={Feed} exact />
               </Switch>
             </Router>

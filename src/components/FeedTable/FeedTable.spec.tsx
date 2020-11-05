@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { FeedList } from './FeedList';
+import { FeedTable } from './FeedTable';
 import { useFeeds } from '~store';
 import { render } from '~test-utils';
 import { Feed } from '~types';
 
-jest.mock('~store/feeds/FeedsHooks', () => ({
+jest.mock('~store/feeds/hooks', () => ({
   useFeeds: jest.fn(),
   useFeed: () => [null, jest.fn()],
 }));
 
-describe('FeedList', () => {
+describe('FeedTable', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -69,7 +69,7 @@ describe('FeedList', () => {
 
     (useFeeds as jest.Mock).mockReturnValue([{ data: testData }]);
 
-    const { getByTestId } = render(<FeedList />);
+    const { getByTestId } = render(<FeedTable />);
     const element = getByTestId('feeds-list-wrapper');
 
     expect(element.children.length).toEqual(2);

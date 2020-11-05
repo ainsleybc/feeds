@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { useFeeds, useFeed } from './FeedsHooks';
-import { FeedsProvider } from './FeedsProvider';
+import { useFeeds, useFeed } from './hooks';
+import { FeedsProvider } from './Provider';
 import { Feed as FeedType } from '~types';
 
 describe('useFeeds', () => {

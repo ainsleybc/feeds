@@ -1,8 +1,8 @@
 import { render, waitFor, act } from '@testing-library/react';
 import React, { useContext, Dispatch } from 'react';
 import { of } from 'rxjs';
-import { fetchFeedsStart, fetchLatestAnswerStart, Action } from './FeedsActions';
-import { FeedsProvider, store } from './FeedsProvider';
+import { fetchFeedsStart, fetchLatestAnswerStart, Action } from './actions';
+import { FeedsProvider, store } from './Provider';
 import { get, latestAnswer } from '~services';
 
 jest.mock('~services', () => ({
@@ -117,7 +117,7 @@ describe('fetching latest answer', () => {
     };
 
     (latestAnswer as jest.Mock).mockImplementation(() =>
-      of({ updatedAt: '2020-11-04T20:23:50.000Z', answer: '68786787688' })
+      of({ updatedAt: '2020-11-04T20:23:50.000Z', price: '68786787688' })
     );
 
     const state = renderTestComponent(mockState);

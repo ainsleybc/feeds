@@ -26,7 +26,7 @@ describe('latestAnswer', () => {
     } as unknown) as Contract);
 
     latestAnswer('someAddress').subscribe((answer) => {
-      expect(answer).toEqual({ answer: '5411645653', updatedAt: '2020-11-04T20:23:50.000Z' });
+      expect(answer).toEqual({ price: '5411645653', updatedAt: '2020-11-04T20:23:50.000Z' });
       done();
     });
   });
@@ -53,7 +53,7 @@ describe('latestAnswer', () => {
     } as unknown) as Contract);
 
     latestAnswer('someAddress').subscribe((answer) => {
-      expect(answer).toEqual({ answer: '8732767537', updatedAt: '2020-11-04T20:36:54.000Z' });
+      expect(answer).toEqual({ price: '8732767537', updatedAt: '2020-11-04T20:36:54.000Z' });
       done();
     });
   });

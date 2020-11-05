@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Feeds } from './Feeds';
+import { Home } from './Home';
 import { get } from '~services';
 import { render, act } from '~test-utils';
 
@@ -8,12 +8,12 @@ jest.mock('~services', () => ({
   get: jest.fn(),
 }));
 
-jest.mock('~store/feeds/FeedsHooks', () => ({
+jest.mock('~store/feeds/hooks', () => ({
   useFeed: () => [null, jest.fn()],
   useFeeds: () => [{ data: [] }, jest.fn()],
 }));
 
-describe('Feeds', () => {
+describe('Home', () => {
   let getByTestId: (is: string) => HTMLElement;
 
   beforeEach(() => {
@@ -49,7 +49,7 @@ describe('Feeds', () => {
 
   it('has a heading', () => {
     act(() => {
-      ({ getByTestId } = render(<Feeds />));
+      ({ getByTestId } = render(<Home />));
     });
 
     expect(getByTestId('heading')).toHaveTextContent(
@@ -59,9 +59,9 @@ describe('Feeds', () => {
 
   it('renders a feeds list', () => {
     act(() => {
-      ({ getByTestId } = render(<Feeds />));
+      ({ getByTestId } = render(<Home />));
     });
 
-    expect(getByTestId('feed-list')).toBeVisible();
+    expect(getByTestId('home:feed-table')).toBeVisible();
   });
 });

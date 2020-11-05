@@ -53,7 +53,7 @@ const generateSponsorUrl = (sponsor: string) => {
   return `https://smartcontract.imgix.net/feeds/sponsors/${sponsor.toLowerCase()}_tn.png?auto=format`;
 };
 
-export const Feed = ({ id }: { id: string }) => {
+export const FeedRow = ({ id }: { id: string }) => {
   const [feed, dispatch] = useFeed(id);
 
   if (!feed) {

@@ -8,7 +8,7 @@ import {
   fetchFeedsFailed,
   fetchLatestAnswerSuccess,
   fetchLatestAnswerFailed,
-} from './FeedsActions';
+} from './actions';
 import { config } from '~config';
 import { get, latestAnswer } from '~services';
 import { Feed, LatestAnswer } from '~types';
@@ -42,7 +42,7 @@ const updateFeed: UpdateFeed = ({ address, answer }, state: State) => {
       ...state.data.slice(0, index),
       {
         ...state.data[index],
-        price: answer.answer,
+        price: answer.price,
         lastUpdated: answer.updatedAt,
       },
       ...state.data.slice(index + 1),

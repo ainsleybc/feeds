@@ -2,7 +2,7 @@ import { Typography, Container } from '@material-ui/core';
 import React from 'react';
 import styled from 'styled-components';
 
-import { Logo, FeedList } from '~components';
+import { Logo, FeedTable } from '~components';
 
 const Hero = styled.div`
   background-color: ${({ theme }) => theme.palette.primary.main};
@@ -37,7 +37,7 @@ const Text = styled.p`
   font-size: 1.1rem;
 `;
 
-export const Feeds = () => {
+export const Home = () => {
   return (
     <Container maxWidth={false} disableGutters={true}>
       <Hero>
@@ -71,7 +71,7 @@ export const Feeds = () => {
         </Container>
       </Hero>
 
-      <FeedList data-testid="feed-list" />
+      <FeedTable data-testid="home:feed-table" />
     </Container>
   );
 };

@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { Feed } from './Feed';
+import { FeedRow } from './FeedRow';
 import { useFeed } from '~store';
 import { render } from '~test-utils';
 import { Feed as FeedType } from '~types';
 
-jest.mock('~store/feeds/FeedsHooks', () => ({
+jest.mock('~store/feeds/hooks', () => ({
   useFeed: jest.fn(),
 }));
 
-describe('Feed', () => {
+describe('FeedRow', () => {
   it('displays the correct data', () => {
     const testData: FeedType = {
       compareOffchain: 'https://www.tradingview.com/symbols/ETHUSD/?exchange=COINBASE',
@@ -36,7 +36,7 @@ describe('Feed', () => {
 
     (useFeed as jest.Mock).mockReturnValue([testData, jest.fn()]);
 
-    const { getByTestId } = render(<Feed id={testData.path} />);
+    const { getByTestId } = render(<FeedRow id={testData.path} />);
 
     expect(getByTestId('feed-name')).toHaveTextContent('ETH / USD');
     expect(getByTestId('feed-price')).toHaveTextContent('$ 1234569.087');

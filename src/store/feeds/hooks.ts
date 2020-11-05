@@ -1,6 +1,6 @@
 import { useContext, Dispatch } from 'react';
-import { Action } from './FeedsActions';
-import { store, State } from './FeedsProvider';
+import { Action } from './actions';
+import { store, State } from './Provider';
 import { Feed } from '~types';
 
 export const useFeeds = (): [State, Dispatch<Action>] => {
