@@ -1,5 +1,5 @@
 import { Container, Paper, Typography, Hidden } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { FeedRow } from './FeedRow';
@@ -56,21 +56,25 @@ export const FeedTable = ({ 'data-testid': testId }: Testable) => {
     }
   }, [data]);
 
-  return (
-    <Wrapper data-testid={testId} maxWidth="xl">
-      <Table elevation={2} variant="outlined" data-testid="feeds-list-wrapper">
-        <TableHeader>
-          <Typography>Currency Pair</Typography>
-          <Current>Last Updated</Current>
-          <Current>Price</Current>
-          <Hidden smDown>
-            <Sponsored>Sponsors</Sponsored>
-          </Hidden>
-        </TableHeader>
-        {data.map(({ path }) => (
-          <FeedRow id={path} key={path} />
-        ))}
-      </Table>
-    </Wrapper>
+  // useFeeds (useContext) triggers the consumer again, so prevent re-rendering unless we need to
+  return useMemo(
+    () => (
+      <Wrapper data-testid={testId} maxWidth="xl">
+        <Table elevation={2} variant="outlined" data-testid="feeds-table-wrapper">
+          <TableHeader>
+            <Typography>Currency Pair</Typography>
+            <Current>Last Updated</Current>
+            <Current>Price</Current>
+            <Hidden smDown>
+              <Sponsored>Sponsors</Sponsored>
+            </Hidden>
+          </TableHeader>
+          {data.map(({ path }) => (
+            <FeedRow id={path} key={path} data-testid={`feeds-table:${path}`} />
+          ))}
+        </Table>
+      </Wrapper>
+    ),
+    [data]
   );
 };

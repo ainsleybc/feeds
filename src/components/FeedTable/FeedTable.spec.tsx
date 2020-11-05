@@ -70,8 +70,8 @@ describe('FeedTable', () => {
     (useFeeds as jest.Mock).mockReturnValue([{ data: testData }]);
 
     const { getByTestId } = render(<FeedTable />);
-    const element = getByTestId('feeds-list-wrapper');
+    const element = getByTestId('feeds-table-wrapper');
 
-    expect(element.children.length).toEqual(2);
+    expect(element.children.length).toEqual(3);
   });
 });

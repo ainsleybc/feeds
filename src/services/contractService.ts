@@ -24,7 +24,6 @@ export const latestAnswer = (address: string): Observable<LatestAnswer> =>
       });
 
     contract.on('AnswerUpdated', (answer, _, updatedAt) => {
-      console.log(toString(answer));
       subscriber.next({ updatedAt: toTimeStamp(updatedAt), price: toString(answer) });
     });
   });

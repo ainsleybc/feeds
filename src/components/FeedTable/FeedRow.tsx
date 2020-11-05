@@ -1,10 +1,11 @@
 import { Avatar, Typography, Hidden } from '@material-ui/core';
 import { AvatarGroup } from '@material-ui/lab';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useFeed, fetchLatestAnswerStart, fetchLatestAnswerStop } from '~store';
+import { Testable } from '~types';
 import { formatPrice, formatDateDifference } from '~utils';
 
 const Row = styled.div`
@@ -75,7 +76,7 @@ const generateSponsorUrl = (sponsor: string) => {
   return `https://smartcontract.imgix.net/feeds/sponsors/${sponsor.toLowerCase()}_tn.png?auto=format`;
 };
 
-export const FeedRow = ({ id }: { id: string }) => {
+export const FeedRow = ({ id, 'data-testid': testId }: Testable & { id: string }) => {
   const [feed, dispatch] = useFeed(id);
 
   if (!feed) {
@@ -94,45 +95,49 @@ export const FeedRow = ({ id }: { id: string }) => {
   useEffect(() => {
     dispatch(fetchLatestAnswerStart(contractAddress));
 
-    // unsubscribe when we dismount
     return () => {
+      // unsubscribe when we dismount
       dispatch(fetchLatestAnswerStop(contractAddress));
     };
   }, []);
 
-  return (
-    <Row>
-      <Link
-        to={`/${path}`}
-        css={`
-          text-decoration: none;
-        `}
-      >
-        <Hidden smDown>
-          <CurrencyIcons max={2}>
-            <Avatar alt={firstCurrency} />
-            <Avatar alt={secondCurrency} />
-          </CurrencyIcons>
-        </Hidden>
+  // useFeed (useContext) triggers the consumer again, so prevent re-rendering unless we need to
+  return useMemo(
+    () => (
+      <Row data-testid={testId}>
+        <Link
+          to={`/${path}`}
+          css={`
+            text-decoration: none;
+          `}
+        >
+          <Hidden smDown>
+            <CurrencyIcons max={2}>
+              <Avatar alt={firstCurrency} />
+              <Avatar alt={secondCurrency} />
+            </CurrencyIcons>
+          </Hidden>
 
-        <Name data-testid="feed-name">{name}</Name>
+          <Name data-testid="feed-name">{name}</Name>
 
-        <Values>
-          <LastUpdated data-testid="feed-last-updated">
-            {formatDateDifference(feed) || null}
-          </LastUpdated>
+          <Values>
+            <LastUpdated data-testid="feed-last-updated">
+              {formatDateDifference(feed) || null}
+            </LastUpdated>
 
-          <Price data-testid="feed-price">{formatPrice(feed) || null}</Price>
-        </Values>
+            <Price data-testid="feed-price">{formatPrice(feed) || null}</Price>
+          </Values>
 
-        <Hidden smDown>
-          <Sponsors max={4} spacing={-3}>
-            {sponsored.map((sponsor) => (
-              <Avatar key={sponsor} alt={sponsor} src={generateSponsorUrl(sponsor)} />
-            ))}
-          </Sponsors>
-        </Hidden>
-      </Link>
-    </Row>
+          <Hidden smDown>
+            <Sponsors max={4} spacing={-3}>
+              {sponsored.map((sponsor) => (
+                <Avatar key={sponsor} alt={sponsor} src={generateSponsorUrl(sponsor)} />
+              ))}
+            </Sponsors>
+          </Hidden>
+        </Link>
+      </Row>
+    ),
+    [feed]
   );
 };
