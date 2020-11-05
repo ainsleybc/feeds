@@ -6,10 +6,15 @@ import { Logo, FeedTable } from '~components';
 
 const Hero = styled.div`
   background-color: ${({ theme }) => theme.palette.primary.main};
-  min-height: 600px;
+  min-height: 800px;
   width: 100%;
   padding: ${({ theme }) => theme.spacing(4, 0)};
+  padding-bottom: 250px;
   color: #fff;
+
+  & + * {
+    margin-top: -200px;
+  }
 `;
 
 const LogoContainer = styled.div`

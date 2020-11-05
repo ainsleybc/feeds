@@ -14,9 +14,7 @@ const toString = (bigNumber: BigNumber) => bigNumber.toString();
 export const latestAnswer = (address: string): Observable<LatestAnswer> =>
   new Observable((subscriber) => {
     const { infuraNetwork, infuraProjectId } = config;
-    const projectId = infuraProjectId;
-    const network = infuraNetwork;
-    const provider = new ethers.providers.InfuraProvider(network, projectId);
+    const provider = new ethers.providers.InfuraProvider(infuraNetwork, infuraProjectId);
     const contract = new ethers.Contract(address, ABI, provider);
 
     contract.functions
@@ -26,6 +24,7 @@ export const latestAnswer = (address: string): Observable<LatestAnswer> =>
       });
 
     contract.on('AnswerUpdated', (answer, _, updatedAt) => {
+      console.log(toString(answer));
       subscriber.next({ updatedAt: toTimeStamp(updatedAt), price: toString(answer) });
     });
   });

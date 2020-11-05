@@ -6,19 +6,20 @@ import { FeedRow } from './FeedRow';
 import { useFeeds, fetchFeedsStart } from '~store';
 import { Testable } from '~types';
 
-const Wrapper = styled.div`
-  position: relative;
-  padding-top: ${({ theme }) => `${theme.spacing(2)}px`};
+const Wrapper = styled(Container)`
+  max-width: 1920px;
 
-  &::before {
-    content: ' ';
-    height: 200px;
-    width: 100%;
-    background-color: ${({ theme }) => theme.palette.primary.main};
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
+  @media (max-width: 600px) {
+    padding: 0;
+  }
+`;
+
+const Table = styled(Paper)`
+  min-height: 800px;
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    border-radius: 0;
   }
 `;
 
@@ -32,22 +33,12 @@ export const FeedTable = ({ 'data-testid': testId }: Testable) => {
   }, [data]);
 
   return (
-    <Wrapper data-testid={testId}>
-      <Container maxWidth="xl">
-        <Paper
-          elevation={2}
-          variant="outlined"
-          data-testid="feeds-list-wrapper"
-          css={`
-            min-height: 800px;
-            overflow: hidden;
-          `}
-        >
-          {data.map(({ path }) => (
-            <FeedRow id={path} key={path} />
-          ))}
-        </Paper>
-      </Container>
+    <Wrapper data-testid={testId} maxWidth="xl">
+      <Table elevation={2} variant="outlined" data-testid="feeds-list-wrapper">
+        {data.map(({ path }) => (
+          <FeedRow id={path} key={path} />
+        ))}
+      </Table>
     </Wrapper>
   );
 };

@@ -1,4 +1,4 @@
-import { Avatar, Typography } from '@material-ui/core';
+import { Avatar, Typography, Hidden } from '@material-ui/core';
 import { AvatarGroup } from '@material-ui/lab';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -19,15 +19,17 @@ const Row = styled.div`
 `;
 
 const CurrencyIcons = styled(AvatarGroup)`
+  margin-right: ${({ theme }) => `${theme.spacing(2)}px`};
+
   & > div {
     border: none;
   }
 `;
 
 const Name = styled(Typography)`
-  margin-left: ${({ theme }) => `${theme.spacing(2)}px`};
   font-size: 1.2rem;
   flex: 1 0 auto;
+  color: ${({ theme }) => theme.palette.grey[700]};
 `;
 
 const Price = styled(Typography)`
@@ -80,11 +82,18 @@ export const FeedRow = ({ id }: { id: string }) => {
 
   return (
     <Row>
-      <Link to={`/${path}`}>
-        <CurrencyIcons max={2}>
-          <Avatar alt={firstCurrency} />
-          <Avatar alt={secondCurrency} />
-        </CurrencyIcons>
+      <Link
+        to={`/${path}`}
+        css={`
+          text-decoration: none;
+        `}
+      >
+        <Hidden smDown>
+          <CurrencyIcons max={2}>
+            <Avatar alt={firstCurrency} />
+            <Avatar alt={secondCurrency} />
+          </CurrencyIcons>
+        </Hidden>
 
         <Name variant="body1" data-testid="feed-name">
           {name}
@@ -98,11 +107,13 @@ export const FeedRow = ({ id }: { id: string }) => {
           {formatPrice(feed) || null}
         </Price>
 
-        <Sponsors max={4} spacing={-3}>
-          {sponsored.map((sponsor) => (
-            <Avatar key={sponsor} alt={sponsor} src={generateSponsorUrl(sponsor)} />
-          ))}
-        </Sponsors>
+        <Hidden smDown>
+          <Sponsors max={4} spacing={-3}>
+            {sponsored.map((sponsor) => (
+              <Avatar key={sponsor} alt={sponsor} src={generateSponsorUrl(sponsor)} />
+            ))}
+          </Sponsors>
+        </Hidden>
       </Link>
     </Row>
   );

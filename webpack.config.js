@@ -32,7 +32,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         // @TODO we could make using config better but this works for now..
-        INFURA_PROJECT_ID: JSON.stringify('dd71a1758118408cb01a33faffc7a402'),
+        INFURA_PROJECT_ID: JSON.stringify('255c21f66f5840eb9f23fb38595b0f2c'),
         INFURA_NETWORK: JSON.stringify('homestead'),
         WEIWATCHERS_URL: JSON.stringify('https://weiwatchers.com/feeds-mainnet.json'),
       },
