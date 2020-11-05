@@ -7,5 +7,5 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
-  setupFilesAfterEnv: ['<rootDir>/test-utils/matchers.ts'],
+  setupFilesAfterEnv: ['<rootDir>/test-utils/jest-setup.ts'],
 };

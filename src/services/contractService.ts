@@ -1,5 +1,6 @@
 import { ethers, BigNumber } from 'ethers';
 import { Observable } from 'rxjs';
+import { config } from '~config';
 import { LatestAnswer } from '~types';
 
 const ABI = [
@@ -12,8 +13,9 @@ const toString = (bigNumber: BigNumber) => bigNumber.toString();
 
 export const latestAnswer = (address: string): Observable<LatestAnswer> =>
   new Observable((subscriber) => {
-    const projectId = 'dd71a1758118408cb01a33faffc7a402';
-    const network = 'homestead';
+    const { infuraNetwork, infuraProjectId } = config;
+    const projectId = infuraProjectId;
+    const network = infuraNetwork;
     const provider = new ethers.providers.InfuraProvider(network, projectId);
     const contract = new ethers.Contract(address, ABI, provider);
 

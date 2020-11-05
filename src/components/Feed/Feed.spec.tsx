@@ -36,7 +36,7 @@ describe('Feed', () => {
 
     (useFeed as jest.Mock).mockReturnValue([testData, jest.fn()]);
 
-    const { getByTestId } = render(<Feed address={testData.contractAddress} />);
+    const { getByTestId } = render(<Feed id={testData.path} />);
 
     expect(getByTestId('feed-name')).toHaveTextContent('ETH / USD');
     expect(getByTestId('feed-price')).toHaveTextContent('$ 1234569.087');

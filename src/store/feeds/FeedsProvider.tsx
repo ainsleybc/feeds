@@ -9,6 +9,7 @@ import {
   fetchLatestAnswerSuccess,
   fetchLatestAnswerFailed,
 } from './FeedsActions';
+import { config } from '~config';
 import { get, latestAnswer } from '~services';
 import { Feed, LatestAnswer } from '~types';
 
@@ -16,8 +17,8 @@ export type State = { loading: boolean; error: null | any; data: Array<Feed> };
 type Context = [state: State, dispatch: Dispatch<Action>];
 
 const fetchFeeds = async (dispatch: Dispatch<Action>) => {
-  const url = 'https://weiwatchers.com/feeds-mainnet.json';
-  get({ url }).subscribe(
+  const { weiWatchersUrl } = config;
+  get({ url: weiWatchersUrl }).subscribe(
     ({ response }: AjaxResponse) => dispatch(fetchFeedsSuccess(response)),
     (err: AjaxResponse) => dispatch(fetchFeedsFailed(err))
   );

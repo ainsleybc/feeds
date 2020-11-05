@@ -8,9 +8,9 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
-import { Feeds, Feed } from './pages';
-import { FeedsProvider } from './store';
 import { theme } from './theme';
+import { Feeds, Feed } from '~pages';
+import { FeedsProvider } from '~store';
 
 export const App = () => {
   return (
