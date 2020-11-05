@@ -5,9 +5,10 @@ import {
   ThemeProvider as MaterialUIThemeProvider,
 } from '@material-ui/core';
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
-import { Feeds } from './pages';
+import { Feeds, Feed } from './pages';
 import { FeedsProvider } from './store';
 import { theme } from './theme';
 
@@ -19,7 +20,12 @@ export const App = () => {
 
         <StylesProvider injectFirst>
           <FeedsProvider>
-            <Feeds />
+            <Router>
+              <Switch>
+                <Route path="/" component={Feeds} exact />
+                <Route path="/:address" component={Feed} exact />
+              </Switch>
+            </Router>
           </FeedsProvider>
         </StylesProvider>
       </StyledComponentsThemeProvider>

@@ -1,9 +1,9 @@
 import { useContext, Dispatch } from 'react';
 import { Action } from './FeedsActions';
-import { store } from './FeedsProvider';
+import { store, State } from './FeedsProvider';
 import { Feed } from '~types';
 
-export const useFeeds = () => {
+export const useFeeds = (): [State, Dispatch<Action>] => {
   const context = useContext(store);
   if (!context) {
     throw new Error('useFeeds must be used within a FeedsProvider');

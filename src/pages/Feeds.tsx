@@ -2,7 +2,7 @@ import { Typography, Container } from '@material-ui/core';
 import React from 'react';
 import styled from 'styled-components';
 
-import { Logo, FeedList } from '../components';
+import { Logo, FeedList } from '~components';
 
 const Hero = styled.div`
   background-color: ${({ theme }) => theme.palette.primary.main};

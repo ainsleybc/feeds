@@ -1,18 +1,21 @@
 import { Avatar, Typography } from '@material-ui/core';
 import { AvatarGroup } from '@material-ui/lab';
-import { BigNumber } from 'bignumber.js';
-import { formatDistance } from 'date-fns';
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useFeed, fetchLatestAnswerStart, fetchLatestAnswerStop } from '~store';
+import { formatPrice, formatDateDifference } from '~utils';
 
 const Row = styled.div`
-  display: flex;
   height: 75px;
   border: 1px solid ${({ theme }) => theme.palette.grey[50]};
-  align-items: center;
   padding: ${({ theme }) => `${theme.spacing(2)}px`};
+
+  & > a {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const CurrencyIcons = styled(AvatarGroup)`
@@ -60,24 +63,9 @@ export const Feed = ({ address }: { address: string }) => {
 
   const {
     name,
-    price,
-    multiply,
     sponsored,
-    valuePrefix,
-    lastUpdated,
-    decimalPlaces,
-    formatDecimalPlaces,
     pair: [firstCurrency, secondCurrency],
   } = feed;
-
-  const formatPrice = (price: string) => {
-    const number = new BigNumber(price)
-      .dividedBy(multiply)
-      .shiftedBy(-formatDecimalPlaces)
-      .toFixed(decimalPlaces, 3);
-
-    return `${valuePrefix} ${Number.parseFloat(number).toString()}`;
-  };
 
   useEffect(() => {
     dispatch(fetchLatestAnswerStart(address));
@@ -90,30 +78,30 @@ export const Feed = ({ address }: { address: string }) => {
 
   return (
     <Row>
-      <CurrencyIcons max={2}>
-        <Avatar alt={firstCurrency} />
-        <Avatar alt={secondCurrency} />
-      </CurrencyIcons>
+      <Link to={`/${address}`}>
+        <CurrencyIcons max={2}>
+          <Avatar alt={firstCurrency} />
+          <Avatar alt={secondCurrency} />
+        </CurrencyIcons>
 
-      <Name variant="body1" data-testid="feed-name">
-        {name}
-      </Name>
+        <Name variant="body1" data-testid="feed-name">
+          {name}
+        </Name>
 
-      <Name variant="body1" data-testid="feed-last-updated">
-        {lastUpdated
-          ? formatDistance(new Date(lastUpdated), new Date(), { addSuffix: true })
-          : null}
-      </Name>
+        <Name variant="body1" data-testid="feed-last-updated">
+          {formatDateDifference(feed) || null}
+        </Name>
 
-      <Price variant="body1" data-testid="feed-price">
-        {price ? formatPrice(price) : null}
-      </Price>
+        <Price variant="body1" data-testid="feed-price">
+          {formatPrice(feed) || null}
+        </Price>
 
-      <Sponsors max={4} spacing={-3}>
-        {sponsored.map((sponsor) => (
-          <Avatar key={sponsor} alt={sponsor} src={generateSponsorUrl(sponsor)} />
-        ))}
-      </Sponsors>
+        <Sponsors max={4} spacing={-3}>
+          {sponsored.map((sponsor) => (
+            <Avatar key={sponsor} alt={sponsor} src={generateSponsorUrl(sponsor)} />
+          ))}
+        </Sponsors>
+      </Link>
     </Row>
   );
 };

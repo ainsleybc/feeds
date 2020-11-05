@@ -9,6 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
   resolve: {
     plugins: [new TsconfigPathsPlugin()],
@@ -34,5 +35,6 @@ module.exports = {
   devServer: {
     hot: true,
     open: true,
+    historyApiFallback: true,
   },
 };

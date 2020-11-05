@@ -2,7 +2,7 @@ import { Container, Paper } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { Feed } from './Feed';
+import { Feed } from '../Feed/Feed';
 import { useFeeds, fetchFeedsStart } from '~store';
 import { Testable } from '~types';
 
@@ -43,8 +43,8 @@ export const FeedList = ({ 'data-testid': testId }: Testable) => {
             overflow: hidden;
           `}
         >
-          {data.map((feed) => (
-            <Feed address={feed.contractAddress} key={feed.contractAddress} />
+          {data.map(({ contractAddress }) => (
+            <Feed address={contractAddress} key={contractAddress} />
           ))}
         </Paper>
       </Container>
