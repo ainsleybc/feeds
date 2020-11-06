@@ -1,4 +1,4 @@
-import { formatDateDifference, formatPrice } from './index';
+import { formatDateDifference, formatPrice, formatPrettyDate } from './index';
 import { Feed } from '~types';
 
 describe('formatDateDifference', () => {
@@ -40,6 +40,20 @@ describe('formatPrice', () => {
         valuePrefix: '$',
         price: undefined,
       } as Feed)
+    ).toBeNull();
+  });
+});
+
+describe('formatPrettyDate', () => {
+  it('formats the price according to the feed data', () => {
+    expect(formatPrettyDate({ lastUpdated: '2020-11-04T18:23:50.000Z' } as Feed)).toEqual(
+      '4 Nov 2020 6:23 PM'
+    );
+  });
+
+  it('returns null if no price', () => {
+    expect(
+      formatDateDifference({ lastUpdated: undefined } as Feed, new Date('2020-11-04T20:23:50.000Z'))
     ).toBeNull();
   });
 });

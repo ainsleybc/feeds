@@ -99,7 +99,7 @@ export const FeedRow = ({ id, 'data-testid': testId }: Testable & { id: string }
       // unsubscribe when we dismount
       dispatch(fetchLatestAnswerStop(contractAddress));
     };
-  }, []);
+  }, [contractAddress]);
 
   // useFeed (useContext) triggers the consumer again, so prevent re-rendering unless we need to
   return useMemo(

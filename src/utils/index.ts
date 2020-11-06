@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js';
-import { formatDistance } from 'date-fns';
+import { formatDistance, format } from 'date-fns';
 import { Feed } from '~types';
 
 export const formatPrice = ({
@@ -26,4 +26,11 @@ export const formatDateDifference = ({ lastUpdated }: Feed, date = new Date()) =
     return null;
   }
   return formatDistance(new Date(lastUpdated), date, { addSuffix: true });
+};
+
+export const formatPrettyDate = ({ lastUpdated }: Feed) => {
+  if (!lastUpdated) {
+    return null;
+  }
+  return format(new Date(lastUpdated), 'd MMM yyyy h:m a');
 };
